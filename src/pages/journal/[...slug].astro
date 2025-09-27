@@ -1,0 +1,80 @@
+---
+import { getEntry, type CollectionEntry } from 'astro:content';
+import Prose from '~/components/common/Prose.astro';
+import Layout from '~/layouts/Layout.astro';
+import displayDate from '~/utils/displayTime';
+
+interface Props {
+  post: CollectionEntry<'diary'>
+  month: 'febrero' | 'marzo'
+  theme?: "love"
+}
+
+const { slug } = Astro.params;
+if (slug === undefined) {
+  return Astro.redirect("/404");
+}
+const post = await getEntry("diary", slug);
+if (post === undefined) {
+  return Astro.redirect("/404");
+}
+
+
+
+
+const { Content } = await post.render();
+const transitionName = `post-img-${post.slug}`;
+const { date, heroImage, theme } = post.data;
+const dateString = displayDate(date, { day: 'numeric', month: 'long' });
+---
+
+<Layout title={dateString} hideTitle={true} theme={theme} class="pt-0 pb-10 relative">
+  <div class="proggress-bar fixed top-0 w-0 h-2 bg-primary rounded" />
+  <div class={`container ${theme && 'text-black'}`}>
+    <div class="aspect-video max-w-3xl  mx-auto rounded-lg overflow-hidden shadow-2xl">
+            {heroImage ? (
+        <img
+        data-transition={transitionName}
+        src={heroImage}
+        class="w-full h-full object-cover rounded-lg"
+      />
+      ) : (
+        <div class="bg-black w-full h-full group-hover:bg-zinc-900  group-focus-within:bg-zinc-900 transition-all duration-300 ">
+        </div>
+      )}
+    </div>
+    <div class="py-4 space-y-4 max-w-3xl mx-auto">
+      <h1 class="text-center text-4xl font-bold font-bricolage text-balance capitalize">{dateString}</h1>
+    </div>
+    <Prose class="border-t mx-auto py-8 border-gray-300 text-lg" theme={theme}>
+      <div class="scroll-content">
+        <Content />
+      </div>
+    </Prose>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  document.addEventListener('astro:page-load', () => {
+    gsap.registerPlugin(ScrollTrigger);
+    const scrollContent = document.querySelector('.scroll-content') as HTMLDivElement;
+    const progressBar = document.querySelector('.proggress-bar') as HTMLDivElement;
+
+    gsap.to(progressBar,{
+      width: '100%',
+      scrollTrigger: {
+        trigger: scrollContent,
+        scrub: true,
+        start: 'top 60%',
+        end: 'bottom 96%',
+        toggleActions: 'play reverse none none',
+      }
+    })
+
+  })
+
+
+</script>

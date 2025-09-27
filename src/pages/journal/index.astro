@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import RenderCollection from '~/components/common/RenderCollection';
+import Filter from '~/components/common/Filter.astro';
+import Layout from '~/layouts/Layout.astro';
+
+const capsules = (await getCollection('diary')).filter(({ slug }) => !slug.includes('nancy'));
+---
+
+<Layout title="Capsules of Echoes">
+  <main class="container">
+    <div class="mb-4 md:mb-8 items-center flex justify-between flex-wrap gap-8 md:gap-0">
+      <!-- <Filter
+        filters={['all', 'septiembre']}
+      /> -->
+    </div>
+    <RenderCollection client:load collection={capsules} name="journal"  />
+  </main>
+</Layout>

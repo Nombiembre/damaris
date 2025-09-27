@@ -1,0 +1,16 @@
+---
+const { theme } = Astro.props;
+---
+
+<div
+  class={`prose prose-h1:font-bold prose-h1:text-xl mx-auto
+  prose-a:text-primary-light
+  prose-h2:text-2xl prose-h2:md:text-3xl
+  prose-img:mx-auto prose-img:rounded-xl
+
+
+  ${theme === "love" ? "prose-strong:text-zinc-800 prose-blockquote:text-black prose-headings:text-black text-zinc-800 prose-a:text-primary-light prose-blockquote:border-zinc-500" : "prose-strong:text-white prose-blockquote:text-zinc-300 md:prose-blockquote:text-zinc-100 prose-headings:text-white text-gray-100 md:text-white prose-a:text-primary-light"}
+  `}
+>
+  <slot />
+</div>

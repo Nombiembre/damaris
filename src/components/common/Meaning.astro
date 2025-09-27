@@ -1,0 +1,118 @@
+---
+interface Props {
+  word: string;
+  meaning: string;
+}
+
+const { word, meaning } = Astro.props;
+---
+
+<span class="relative inline-block">
+  <span class="word inline-block bg-slate-800 px-1 rounded-md hover:bg-slate-800/80 transition-all duration-300">
+    {word}
+  </span>
+  <span class="meaning absolute bottom-0 min-w-2xs max-w-xs w-max opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+    <span class="bg-slate-800 md:mx-2 text-white px-2 py-1 my-1 md:my-0 rounded-md inline-block break-words">
+      {meaning}
+    </span>
+  </span>
+</span>
+
+<style>
+  /* Mantener el comportamiento en escritorio */
+  .word:hover + .meaning,
+  .meaning:hover {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (max-width: 640px) { /* Móvil */
+    .meaning {
+      bottom: auto;
+      top: 100%;
+      width: 90%;
+      max-width: 250px;
+      white-space: normal;
+      text-align: left;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener("astro:page-load", () => {
+  function positionTooltip(word: HTMLElement, meaning: HTMLElement) {
+    if (!word || !meaning) return;
+
+    // Mostrar temporalmente para medir su tamaño
+    meaning.style.pointerEvents = "auto";
+
+    requestAnimationFrame(() => {
+      const wordRect = word.getBoundingClientRect();
+      const meaningRect = meaning.getBoundingClientRect();
+      const screenWidth = window.innerWidth;
+
+      // Reset estilos previos
+      meaning.style.left = "auto";
+      meaning.style.right = "auto";
+      meaning.style.transform = "none";
+
+      const isCentered =
+        wordRect.left > screenWidth * 0.25 && wordRect.right < screenWidth * 0.75;
+
+      if (isCentered) {
+        // Si está en el centro de la pantalla, lo centramos completamente
+        meaning.style.left = "50%";
+        meaning.style.transform = "translateX(-50%)";
+      } else if (wordRect.left < 50) {
+        // Si está cerca del borde izquierdo
+        meaning.style.left = "0";
+        meaning.style.right = "auto";
+      } else if (wordRect.right + meaningRect.width > screenWidth - 10) {
+        // Si está cerca del borde derecho
+        meaning.style.right = "0";
+        meaning.style.left = "auto";
+      }
+
+      // Ocultarlo nuevamente hasta que el usuario haga hover
+      meaning.style.opacity = "0";
+      meaning.style.pointerEvents = "none";
+    });
+  }
+
+  function initializeTooltip() {
+    if (window.innerWidth > 768) return; // Solo en móvil
+
+    document.querySelectorAll<HTMLSpanElement>(".word").forEach((word) => {
+      const meaning = word.nextElementSibling as HTMLSpanElement
+      meaning.classList.remove('hidden')
+      if (!meaning) return;
+
+      // Posicionar el tooltip en la carga de la página
+      positionTooltip(word, meaning);
+
+      word.addEventListener("mouseenter", () => {
+        meaning.style.opacity = "1";
+        meaning.style.pointerEvents = "auto";
+      });
+
+      word.addEventListener("mouseleave", () => {
+        meaning.style.opacity = "0";
+        meaning.style.pointerEvents = "none";
+      });
+    });
+  }
+
+  initializeTooltip();
+
+  // Solo reposiciona en móviles al cambiar de tamaño
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll<HTMLSpanElement>(".word").forEach((word) => {
+        const meaning = word.nextElementSibling as HTMLElement | null;
+        if (meaning) positionTooltip(word, meaning);
+      });
+    }
+  });
+});
+
+</script>

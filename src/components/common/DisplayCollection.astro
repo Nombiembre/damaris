@@ -1,0 +1,33 @@
+---
+import displayDate from '~/utils/displayTime';
+import Typography from './Typography.astro';
+
+interface Props {
+  collection: any[];
+  name: string;
+  size?: 'small';
+  titleClass?: string;
+}
+
+const { collection, name, size, titleClass } = Astro.props;
+---
+
+<div class={`grid gap-2 ${size === 'small' ? 'xl:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ' : 'md:grid-cols-3 sm:grid-cols-2'}`}>
+  {
+    collection.map(({slug, data}) => {
+
+      const transitionName = `post-img-${slug}`;
+      return (
+      <a class={` rounded-xl overflow-hidden block cursor-pointer group`} href={`/${name}/${slug}`}>
+        <div class="aspect-video">
+            <img transition:name={transitionName} src={data.heroImage ? data.heroImage : `/diary_images/general.avif`}  class="w-full h-full object-cover rounded-t-lg group-hover:scale-125 transition-all duration-300 -z-50 " />
+        </div>
+        <div class={`py-1 bg-zinc-900  overflow-hidden isolate ${titleClass}`}>
+          <Typography as="h2" variant={`${size === 'small' ? 'h4' : 'h3'}`}>
+            {data.title ? data.title : displayDate(data.date, { day: 'numeric', month: 'long' })}
+          </Typography>
+        </div>
+      </a>
+    )})
+  }
+</div>

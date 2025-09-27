@@ -1,0 +1,466 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import AudioPlayer from "~/components/common/react/PlayButton";
+import Typography from "~/components/common/Typography.astro";
+---
+
+<Layout
+  title="Transmission"
+  hideTitle
+  hideBg
+>
+  <div class="animated-bg fixed inset-0 -z-10 h-full w-full"></div>
+
+  <main class="container space-y-6 flex flex-col items-center relative">
+    <Typography as="h2" variant="h4" class="md:hidden">
+      Para una mejor experiencia ver en computador
+    </Typography>
+    <div class="flex-1">
+      <AudioPlayer
+        client:load
+        src="/music/quietandfalling.mp3"
+        text="Haz click para comenzar"
+        timeout={2000}
+      />
+    </div>
+
+    <div
+      class="stars-container1 fixed inset-0 pointer-events-none h-full min-h-screen"
+    >
+    </div>
+    <img
+      src="/sprites/moon.png"
+      class="moon w-24 h-24 fixed scale-0 opacity-0"
+      alt=""
+    />
+    <img
+      src="/sprites/comet.png"
+      class="comet w-24 h-24 fixed scale-0 opacity-0"
+    />
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-345 -70 1798 507"
+      class="fixed opacity-0 pointer-events-none"
+      width="1798px"
+      height="507px"
+    >
+      <path
+        id="comet-path"
+        style="fill: none; stroke: rgb(213, 116, 116); stroke-width: 5px; stroke-linecap: round;"
+        d="M -340 400 C 200 -100, 1200 -100, 1700 300"></path>
+    </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-100 -50 600 400"
+      class="fixed opacity-0 pointer-events-none"
+      width="600px"
+      height="400px"
+    >
+      <path
+        id="moon-path-mobile"
+        style="fill: none; stroke: rgb(213, 116, 116); stroke-width: 4px; stroke-linecap: round;"
+        d="M -100 200
+         C 0 350, 150 50, 250 200
+         S 400 350, 500 150
+         C 550 50, 600 250, 650 200"
+      ></path>
+    </svg>
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-345.0822 -70.0893 1797.8427 507.0125"
+      class="fixed opacity-0 pointer-events-none"
+      width="1797.8427px"
+      height="507.0125px"
+    >
+      <path
+        id="moon-path"
+        style="fill-rule: nonzero; fill: none; stroke: rgb(213, 116, 116); stroke-width: 9px; stroke-linecap: round;"
+        d="M 1452.727 315.326 C 1456.733 325.34 1100.174 438.375 1062.511 436.906 C 939.063 439.478 764.034 152.322 699.761 52.763 C 659.045 -22.906 282.416 -106.802 198.308 -53.041 C 184.884 -49.22 -381.83 335.836 -343.193 381.07"
+        transform="matrix(1, 0, 0, 1, 5.684341886080802e-14, 5.684341886080802e-14)"
+      ></path>
+    </svg>
+
+    <div
+      id="mensaje"
+      class="max-w-screen-md text-center mx-auto space-y-80 md:text-4xl text-3xl relative"
+    >
+      <div class="message__fragment">
+        Estos días que he estado sin ti me han mostrado que de verdad te amo de
+        manera incondicional, me han motivado para luchar por ti.
+      </div>
+      <div class="message__fragment">
+        Cada día que pasa, mi convicción es más fuerte, cada vez estoy más
+        determinado a seguir hasta el final.
+      </div>
+      <div class="message__fragment start-comet">
+        Sé que llegará el día en que mire al pasado y esté orgulloso de que no
+        me hubiera rendido. Llegará el día en el que estemos juntos y estaré
+        feliz porque jamás te abandoné.
+      </div>
+      <div class="message__fragment">
+        Por favor, no te sientas mal, nada de esto es tu culpa. Sé que te duele
+        y crees que me hiciste daño, sé que no me quieres hacer sufrir.
+      </div>
+      <div class="message__fragment">
+        Te han hecho mucho daño, demasiado. Tu mente solo está intentando
+        protegerte, tu corazón no quiere ser herido una vez más. No es tu culpa,
+        nada de esto es tu culpa, ni la mía.
+      </div>
+      <div class="message__fragment">
+        Ahora la situación hace que sea difícil que puedas abrirte, que puedas
+        volver a confiar, y lo entiendo. No te preocupes, amorcito, voy a
+        mantener mi promesa.
+      </div>
+      <div class="message__fragment">
+        Voy a seguir aquí, nunca me voy a ir. Dijiste que una vez te dijeron que
+        "es difícil amarte" y que todos se rinden, pero yo no. Voy a seguir
+        aquí, voy a mostrarte que no me voy a rendir.
+      </div>
+      <div class="message__fragment">
+        No voy a ser uno más de esos. Como te decía en una cápsula, no voy a ser
+        una más de esas historias que le cuentes a las próximas personas con las
+        que hables, voy a ser un hombre en la luna.
+      </div>
+      <div class="message__fragment">
+        Aunque parece que la historia ya está escrita y solo somos espectadores,
+        vamos a quemar el guion, vamos a escribir un nuevo final.
+      </div>
+      <div class="message__fragment">
+        Sé que el amor puede lograrlo todo, confío en que mi amor hará que poco
+        a poco sanes, que puedas volver a confiar.
+      </div>
+      <div class="message__fragment">
+        Así que no te culpes, no te sientas mal. Es como si una persona sin
+        piernas se sintiera mal por no poder correr. No es su culpa. Ahora no
+        puedes estar conmigo, así que está bien, lo entiendo.
+      </div>
+      <div class="message__fragment">
+        Confío en que en el futuro nos vamos a reencontrar, en que un día me
+        preguntarás: "¿Me sigues amando?, ¿me sigues esperando?"
+      </div>
+      <div class="message__fragment end-comet">
+        Y te responderé: "Cada día seguí amándote, con amor eterno te he amado.
+        Hoy mi alma se alegra, porque hoy ha vuelto el amor de mi vida, ha
+        llegado el día tan esperado y nunca más nos volveremos a separar."
+      </div>
+      <div class="message__fragment">
+        Un día mi esfuerzo, mi amor, mi compromiso harán que esos miedos que
+        tienes se vayan debilitando. Lo vamos a lograr, amorcito. Vas a poder
+        sanar, vas a poder volver a amar.
+      </div>
+      <div class="message__fragment">
+        Parece que es imposible, pero confío en que vas a poder romper tu
+        bloqueo emocional conmigo.
+      </div>
+      <div class="message__fragment">
+        No importa el tiempo que tenga que pasar, seguiré aquí. Si Jacob esperó
+        14 años para estar con el amor de su vida, ¿por qué yo no lo haría?
+      </div>
+      <div class="message__fragment">
+        No pienses que voy a perder esos años, no. Para mí no es una pérdida de
+        tiempo amarte. Me siento feliz y orgulloso de poder amarte, de mostrarte
+        que mi amor por ti es real.
+      </div>
+      <div class="message__fragment">
+        No importan los años que tenga que pasar esperando si eso significa que
+        voy a estar junto a ti toda mi vida.
+      </div>
+      <div class="message__fragment">
+        Sé que eres el amor de mi vida, voy a luchar por ti, voy a enamorarte,
+        voy a lograr que salgas de tu bloqueo emocional.
+      </div>
+      <div class="message__fragment">
+        Ahora el vacío te está llamando y están gobernando tus pensamientos
+        oscuros... He estado ahí y créeme, es un asco estar en esa situación,
+        donde comienzas a creer que esos pensamientos son verdad.
+      </div>
+      <div class="message__fragment start-moon">
+        Pero la luz es más fuerte que la oscuridad, la luz vence las tinieblas.
+        Mi luz, mi amor... Sé que van a vencer la oscuridad en la que estás.
+      </div>
+      <div class="message__fragment">
+        Vas a volver a brillar como la luna, vas a recuperar tu luz estelar, vas
+        a ser la estrella que más brille en el universo.
+      </div>
+      <div class="message__fragment">
+        Siento que llegaste en el momento perfecto a mi vida. Si hubieras
+        llegado antes, no estaría preparado para enfrentarme a esta situación.
+        Si hubieras llegado después, no estaría en este mundo.
+      </div>
+      <div class="message__fragment">
+        Estos 21 años de sufrimiento, todos estos años queriendo dejar de vivir,
+        todos estos años aprendiendo a vivir... Siento que todos esos años me
+        formaron para este momento.
+      </div>
+      <div class="message__fragment end-moon">
+        Siento que todos esos años me formaron como persona, como hombre, para
+        luchar por ti, para ayudarte a crecer, para enseñarte a vivir, para
+        ayudarte a que no tengas que pasar por ese sufrimiento.
+      </div>
+      <div class="message__fragment">
+        Para demostrarte que alguien te ama de manera incondicional, que no se
+        va a ir por tus miedos, que alguien está dispuesto a luchar por ti, a
+        darlo todo por ti.
+      </div>
+      <div class="message__fragment">
+        Sé que me quieres, pero esos miedos no te dejan estar conmigo. Aunque
+        ahora esos miedos y pensamientos negativos estén ganando, eventualmente
+        los vas a vencer. Sé que lo que estoy haciendo no es en vano.
+      </div>
+      <div class="message__fragment">
+        Aunque ahora esos miedos y pensamientos negativos hacen que te sientas
+        mal conmigo, que creas que me haces daño, eventualmente la luz ganará.
+      </div>
+      <div class="message__fragment">
+        No te voy a mentir, será muy difícil, pero lo vamos a lograr, ¿vale? :3
+        Vamos a superar esto. :3
+      </div>
+      <div class="message__fragment">
+        Aunque ahora cuando leas esto probablemente tus pensamientos negativos
+        estén intentando argumentar en contra de lo que estoy escribiendo.
+      </div>
+      <div class="message__fragment">
+        Intentando que todo lo veas negativo, intentando hacerte sentir
+        culpable, intentando matar el cariño que me tienes, intentando
+        olvidarme.
+      </div>
+      <div class="message__fragment">
+        Solo recuerda que son mentiras, son tus miedos intentando protegerte. Sé
+        que aún me quieres y, aunque ahora te dejes llevar por esos
+        pensamientos...
+      </div>
+      <div class="message__fragment">
+        Confío en que vas a poder ganar contra ellos. Confío en que lo que estoy
+        haciendo servirá para que puedas vencerlos. Te amo mucho.
+      </div>
+      <div class="message__fragment">
+        Te amo con todo mi corazón, siempre estaré aquí para ti. :3 No sé cuánto
+        tiempo pase sin ti, pero aquí estaré. Siempre te voy a amar, siempre me
+        vas a tener.
+      </div>
+
+      <div class="message__fragment">s</div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { gsap } from "gsap";
+  import { MotionPathPlugin } from "gsap/all";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  document.addEventListener("astro:page-load", () => {
+    gsap.registerPlugin(MotionPathPlugin);
+    gsap.registerPlugin(ScrollTrigger);
+    const messages = document.querySelectorAll(".message__fragment");
+    const animatedBg = document.querySelector(".animated-bg");
+    const messageContainer = document.querySelector("#mensaje");
+    const moon = document.querySelector(".moon") as HTMLDivElement;
+
+    messages.forEach((message) =>
+      gsap.to(message, {
+        opacity: 1,
+        scale: 1,
+        scrollTrigger: {
+          trigger: message,
+          start: "top 85%",
+          end: "bottom 45%",
+          toggleActions: "play reverse none none",
+          scrub: true,
+        },
+      })
+    );
+
+    gsap.set(animatedBg, {
+      backgroundImage: "radial-gradient(125% 120% at 50% 0%, #000 10%, #18276b 100%)",
+    })
+    gsap.to(animatedBg, {
+      backgroundImage: () => {
+        return "radial-gradient(100% 120% at 50% 100%, #000 100%, #18276b 100%)";
+      },
+      scrollTrigger: {
+        trigger: messageContainer,
+        start: "top 85%",
+        end: "bottom 45%",
+        scrub: true,
+      },
+    });
+
+    // Generate Stars
+    const container = document.querySelector(
+      ".stars-container1 "
+    ) as HTMLElement;
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      ) as SVGElement;
+      star.setAttribute("viewBox", "0 0 48 48");
+      star.setAttribute("fill", "none");
+      star.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+      star.setAttribute(
+        "class",
+        `stars-container__star absolute text-white pointer-events-none opacity-0`
+      );
+
+      const size = Math.floor(Math.random() * 7) + 3;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      // star.style.opacity = Math.random() * 0.7 + 0.3 + "";
+      star.style.transform = `rotate(${Math.floor(Math.random() * 360)}deg)`;
+      star.style.top = `${Math.floor(Math.random() * 100)}%`;
+      star.style.left = `${Math.floor(Math.random() * 100)}%`;
+
+      const path = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path"
+      );
+      path.setAttribute(
+        "d",
+        "M24 2L30 18H46L32 28L38 44L24 34L10 44L16 28L2 18H18L24 2Z"
+      );
+      path.setAttribute("fill", "currentColor");
+
+      star.appendChild(path);
+      container.appendChild(star);
+    }
+
+    const isMobile = window.innerWidth < 768;
+    const pathId = isMobile ? "#moon-path-mobile" : "#moon-path"; // Usar el path correcto
+
+    gsap.to(
+      document.querySelectorAll(".stars-container1 > .stars-container__star"),
+      {
+        opacity: 1,
+        duration: 4,
+        x: gsap.utils.random(-150, 150, true),
+        y: gsap.utils.random(-150, 150, true),
+        stagger: {
+          each: 0.1, // Cada estrella aparece con un desfase de 0.1s
+          from: "random", // Orden aleatorio
+          ease: "power2.out", // Suavizado
+        },
+        scrollTrigger: {
+          trigger: messageContainer,
+          start: "top 85%",
+          end: "bottom 45%",
+          scrub: true,
+        },
+      }
+    );
+
+    gsap.set(moon, {
+      xPercent: -50,
+      yPercent: -50,
+      transformOrigin: "50% 50%",
+    });
+    let tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: document.querySelector(".start-moon"),
+        endTrigger: document.querySelector(".end-moon"),
+        scrub: 1.7,
+        start: "top 85%",
+        end: "bottom 45%",
+      },
+    });
+
+    tl.to(moon, {
+      keyframes: [
+        {
+          scale: 1,
+          opacity: 1,
+          motionPath: {
+            path: pathId,
+            align: pathId,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: true,
+            end: 0.5, // Hasta la mitad
+          },
+        },
+        {
+          scale: 0,
+          opacity: 0,
+          motionPath: {
+            path: pathId,
+            align: pathId,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: true,
+            start: 0.5, // Continúa desde la mitad
+            end: 1,
+          },
+        },
+      ],
+    });
+
+    const comet = document.querySelector(".comet") as HTMLElement;
+
+    gsap.set(comet, {
+      rotate: 0,
+      xPercent: -50,
+      yPercent: -50,
+      transformOrigin: "center center",
+    });
+
+    let tlComet = gsap.timeline({
+      scrollTrigger: {
+        trigger: document.querySelector(".start-comet"),
+        endTrigger: document.querySelector(".end-comet"),
+        scrub: 1.2,
+        start: "top 85%",
+        end: "bottom 45%",
+      },
+    });
+
+    tlComet.to(comet, {
+      keyframes: [
+        {
+          scale: 2,
+          opacity: 1,
+          motionPath: {
+            path: "#comet-path",
+            align: "#comet-path",
+            alignOrigin: [0, 0.5],
+            autoRotate: 45,
+            end: 0.5,
+          },
+        },
+        {
+          scale: 0,
+          opacity: 0,
+          motionPath: {
+            path: "#comet-path",
+            align: "#comet-path",
+            alignOrigin: [0, 0.5],
+            autoRotate: 45,
+            start: 0.5,
+            end: 1,
+          },
+        },
+      ],
+    });
+
+    //end of script
+  });
+</script>
+
+<style>
+  #mensaje {
+    position: absolute;
+    top: 80vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+  }
+
+  .message__fragment {
+    opacity: 0;
+    scale: 0.5;
+    text-wrap: balance;
+  }
+
+  .animated-bg {
+    /* background-image: radial-gradient(125% 120% at 50% 0%, #000 10%, #18276b 100%) !important; */
+  }
+</style>

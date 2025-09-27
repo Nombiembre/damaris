@@ -1,0 +1,44 @@
+---
+import Button from '~/components/common/Button.astro';
+import Layout from '~/layouts/Layout.astro';
+import PlayAudio from "~/components/common/react/PlayButton"
+import Typography from '~/components/common/Typography.astro';
+
+const navigation = [
+  { title: '01', href: '/transmission/01' },
+  // { title: '02', href: '/transmission/02' },
+]
+---
+
+<Layout title="Transmissions">
+  <main class="container space-y-6">
+    <div class="grid grid-cols-1  gap-10">
+      {
+        navigation.map((item) => (
+          <a href={item.href} class="h-full min-h-[70vh] relative grid items-center justify-center rounded-lg border-white bg-black overflow-hidden">
+            <Typography as="h2" variant="h2">
+              {item.title}
+            </Typography>
+          </a>
+        ))
+      }
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    background: linear-gradient(180deg, rgb(0, 0, 0, 0.5) 0%, rgb(255,217,218, 0.6) 100%);
+    z-index: 1;
+  }
+
+  a:hover::before {
+    transform: translateY(0%);
+  }
+</style>

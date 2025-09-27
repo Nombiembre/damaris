@@ -1,0 +1,16 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<span class="outline capitalize outline-blue-800 text-xs font-medium px-2 py-0.5 rounded-sm">{text}</span>
+
+<style>
+  span {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 33%, rgba(3,74,213,1) 79%, rgba(0,181,255,1) 100%);
+  }
+</style>

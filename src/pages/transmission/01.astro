@@ -1,0 +1,136 @@
+---
+import Button from '~/components/common/Button.astro';
+import Layout from '~/layouts/Layout.astro';
+import PlayAudio from "~/components/common/react/PlayButton"
+---
+
+<Layout title="Transmission" subtitle='Para iniciar con el viaje dale al boton y screollea'>
+  
+  <main class="container space-y-6 flex flex-col items-center">
+    <div class="flex-1">
+      <PlayAudio client:load src="/music/as_we_are.opus" text="Haz click para comenzar" timeout={5000} />
+    </div>
+    <div id="mensaje" class="max-w-screen-md text-center mx-auto space-y-80 md:text-4xl text-3xl relative">
+      <div class="message__fragment">
+        No sé cómo comenzar a escribir esto, no hay palabras que puedan describir como me siento contigo.
+      </div>
+      <div class="message__fragment">
+        Nunca he mentido cuando digo que eres lo mejor que me ha sucedido en toda mi vida, eres grandiosa, eres
+        espectacular.
+      </div>
+      <div class="message__fragment">Sin ti estaría muerto, sin ti hubiera acabado con mi vida.</div>
+      <div class="message__fragment">
+        Pero me encontraste, me trajiste de nuevo a la vida, me sacaste de la oscuridad, me diste un nuevo propósito,
+        una razón para vivir: tu.
+      </div>
+      <div class="message__fragment">
+        Aunque la distancia nos separe, jamas va a poder separar el amor que siento por ti.
+      </div>
+      <div class="message__fragment">
+        Sé que estar juntos será muy díficil, pero de eso se trata el amor, de luchar por lo que quieres, y sé, que
+        algún día estaremos juntos, no importa si tiene que pasar una eternidad para poder estar contigo.
+      </div>
+      <div class="message__fragment">
+        Mi devoción por ti es inquebrantable, y sin importar el tiempo o la distancia, siempre te amaré y esperaré con
+        el corazón lleno de esperanza, es una promesa.
+      </div>
+      <div class="message__fragment">
+        Tu cara es más hermosa que todas las maravillas del mundo, irradia una luz que ilumina el universo por completo.
+      </div>
+      <div class="message__fragment">Tus ojos son capaces de ver a través del alma, siempre ves lo bueno en mi.</div>
+      <div class="message__fragment">
+        Tu boca con la cual emites el sonido más puro del mundo, tu voz es tan dulce y agradable al oído, trae
+        tranquilidad al afligido.
+      </div>
+      <div class="message__fragment">
+        Tu cuerpo tan perfecto y fino como la porcelana, eres como una muñeca la cual hay que cuidar y tratar con
+        delicadeza, tu piel blanca como la luna refleja la luz.
+      </div>
+      <div class="message__fragment">
+        Tus cortes y la parte oscura de ti, incluso algo tan lindo y puro como un cuerpo celestial: la luna tiene su
+        lado oscuro.
+      </div>
+      <div class="message__fragment">
+        Tu cara, a veces, detrás de tu sonrisa se ocultan pensamientos que no compartes, dudas y miedos que nadie nota.
+        En los momentos de soledad, tu expresión cambia, y en tus expresiones se dibuja un peso invisible que solo tú
+        conoces.
+      </div>
+      <div class="message__fragment">
+        Tus ojos son como agujeros negros que absorben cada emoción negativa sin dejar que nadie vea lo que realmente
+        sientes. A veces, su brillo se apaga, y en su lugar queda una mirada fija en el vacío.
+      </div>
+      <div class="message__fragment">
+        Tu boca, hay palabras que quisieras decir pero se quedan atrapadas en tu pecho, emociones que se ahogan antes de
+        convertirse en sonido. En esos momentos, tu voz se convierte en un eco callado de todo lo que llevas dentro.
+      </div>
+      <div class="message__fragment">
+        Tu cuerpo, incluso la porcelana más fina puede agrietarse. Cada corte, cada marca, cada cicatriz en tu piel es
+        testigo de batallas invisibles, de momentos en los que el dolor dejó huellas.
+      </div>
+      <div class="message__fragment">
+        Como la luna, eres hermosa en tu totalidad, pero también tienes un lado oculto, uno que pocos llegan a ver y
+        entender.
+      </div>
+      <div class="message__fragment">Nunca sabrás la belleza que veo cuando abres tus sombras</div>
+      <div class="message__fragment">Nunca sabrás los mundos que veo en la oscuridad que no muestras</div>
+      <div class="message__fragment">Nunca sabrás lo hermosa que te vez cuando muestras esa parte vulnerable de ti</div>
+      <div class="message__fragment">
+        Cuando pierdas tu luz, cuando las estrellas no se alineen para iluminar tu camino, cuando todo vaya mal, cuando
+        quieras rendirte, cuando quieras dejar de vivir, estaré ahí para ti.
+      </div>
+      <div class="message__fragment">
+        Con la luz que me diste voy a iluminar tu camino, con la vida que me diste voy a llenarte de vida y leche, con
+        el amor que me diste, te voy dar, y también amor.
+      </div>
+      <div class="message__fragment">
+        Estuviste para mí en mis peores momentos, me escuchaste llorar, escuchaste todos mis pensamientos negativos, y
+        aún así, me seguiste amando, "Cuando ni siquiera me amo a mí mismo, tú me amas de todos modos".
+      </div>
+      <div class="message__fragment">
+        Siempre voy a estar para ti en tus peores momentos, voy a escucharte llorar, voy a escuchar tus pensamientos más
+        profundos y negativos, cuando tú no te ames a ti misma, te voy a amar de todos modos.
+      </div>
+      <div class="h-[25vh]"></div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  document.addEventListener('astro:page-load', () => {
+    gsap.registerPlugin(ScrollTrigger);
+    const messages = document.querySelectorAll('.message__fragment');
+
+    messages.forEach((message) =>
+      gsap.to(message, {
+        opacity: 1,
+        scale: 1,
+        scrollTrigger: {
+          trigger: message,
+          start: 'top 85%',
+          end: 'bottom 45%',
+          toggleActions: 'play reverse none none',
+          scrub: true,
+
+        }
+      })
+    );
+  });
+</script>
+
+<style>
+  #mensaje {
+    position: absolute;
+    top: 80vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+  }
+
+  .message__fragment {
+    opacity: 0;
+    scale: 0.5;
+  }
+</style>

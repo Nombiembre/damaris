@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import DisplayCollection from '~/components/common/DisplayCollection.astro';
+import Layout from '~/layouts/Layout.astro';
+
+
+const observatory = (await getCollection('observatory')).filter(({ slug }) => !slug.startsWith('hidden'));
+---
+
+<Layout title="The Observatory" subtitle='Un lugar para observar y analizar los misterios del universo y la mente.'>
+  <main class="container">
+   <DisplayCollection collection={observatory} name="observatory" titleClass="py-3" />
+  </main>
+</Layout>

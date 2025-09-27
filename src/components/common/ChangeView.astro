@@ -1,0 +1,108 @@
+---
+import { z } from 'astro:content';
+
+const defaultZ = z.enum(['mosaic', 'list']);
+
+interface Props {
+  default: z.infer<typeof defaultZ>;
+}
+const defaultValue = Astro.props.default;
+---
+
+<div class="ChangeView inline-flex overflow-hidden shadow-sm bg-backgroundAlt rounded-2xl" role="group">
+  <button
+    value="mosaic"
+    type="button"
+    class=`px-2  py-1 md:px-4 md:py-2 hover:bg-neutralGrey transition-colors duration-30
+    ${defaultValue === 'mosaic' ? 'defaultView viewSelected' : ''}
+    `
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="size-6 md:size-8"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z"
+      ></path>
+    </svg>
+  </button>
+
+  <button
+    value="list"
+    type="button"
+    class=`px-2 py-1 md:px-4 md:py-2 hover:bg-neutralGrey transition-colors duration-300
+    ${defaultValue === 'list' ? 'defaultView viewSelected' : ''}
+    `
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      class="size-6 md:size-8 stroke-current fill-purple-500"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+<style>
+  @import "tailwindcss/theme" theme(reference);
+  @import "../../styles/global.css" reference;
+  .viewSelected {
+    @apply bg-white;
+
+    & svg {
+      @apply stroke-black;
+    }
+  }
+</style>
+
+<script>
+  import { viewStore } from '~/utils/filterStore';
+
+  const btns = document.querySelectorAll('.ChangeView button') as NodeListOf<HTMLButtonElement>;
+  const defaultBtn = document.querySelector('.ChangeView .defaultView') as HTMLButtonElement;
+  const renderDiv = document.querySelector('.render-music') as HTMLDivElement;
+  viewStore.set(defaultBtn.value);
+  const mosaicView = 'md:p-8 grid grid-cols-auto-fit-mobile md:grid-cols-auto-fit gap-4';
+  const listView = 'md:p-8 grid grid-cols-1 gap-40';
+
+  if (defaultBtn.value === 'mosaic') {
+    renderDiv.classList.remove(...listView.split(' '));
+    renderDiv.classList.add(...mosaicView.split(' '));
+  } else if (defaultBtn.value === 'list') {
+    renderDiv.classList.remove(...mosaicView.split(' '));
+    renderDiv.classList.add(...listView.split(' '));
+  }
+
+  let prev: HTMLButtonElement;
+  prev = defaultBtn;
+
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      prev.classList.remove('viewSelected');
+      btn.classList.add('viewSelected');
+      prev = btn;
+      const value = btn.getAttribute('value');
+      if (value === 'mosaic') {
+        renderDiv.classList.remove(...listView.split(' '));
+        renderDiv.classList.add(...mosaicView.split(' '));
+        viewStore.set(value);
+      } else if (value === 'list') {
+        renderDiv.classList.remove(...mosaicView.split(' '));
+        renderDiv.classList.add(...listView.split(' '));
+        viewStore.set(value);
+      }
+    });
+  });
+</script>

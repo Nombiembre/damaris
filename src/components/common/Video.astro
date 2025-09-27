@@ -1,0 +1,20 @@
+---
+interface Props {
+  src: string;
+  source?: string;
+  poster?: string;
+}
+
+const { src, source, poster } = Astro.props;
+---
+
+{
+  src &&
+<iframe class="w-full min-h-52 md:min-h-96 h-full rounded-xl" src={src} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+}
+{
+  source &&
+  <video class="w-full min-h-52 md:min-h-96 h-full rounded-xl" controls preload="metadata" poster={poster}>
+    <source src={src} type="video/mp4" />
+  </video>
+}

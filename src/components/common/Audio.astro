@@ -1,0 +1,98 @@
+---
+const { src } = Astro.props;
+---
+
+<div class="audio-player w-full bg-gray-800 rounded-lg p-4 mb-2">
+  <!-- Audio Element -->
+  <audio class="audio hidden" src={src}></audio>
+
+  <div class="flex items-center gap-4">
+      <!-- Play Button -->
+      <button class="playBtn bg-transparent text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+          </svg>
+      </button>
+
+      <div class="flex-1">
+          <!-- Progress Bar -->
+          <div class="progress-container relative h-2 bg-gray-600 rounded-full">
+              <div class="progress absolute h-full w-0 bg-primary rounded-full"></div>
+          </div>
+      </div>
+
+      <!-- Time Display -->
+      <div class="text-sm text-gray-400 mt-1">
+          <span class="currentTime">-:--</span>
+      </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+      const players = document.querySelectorAll(".audio-player") as NodeListOf<HTMLDivElement>;
+
+      players.forEach(player => {
+          const audio = player.querySelector(".audio") as HTMLAudioElement;
+          const playBtn = player.querySelector(".playBtn") as HTMLButtonElement;
+          const progress = player.querySelector(".progress") as HTMLDivElement;
+          const currentTime = player.querySelector(".currentTime") as HTMLSpanElement;
+          const progressContainer = player.querySelector(".progress-container") as HTMLDivElement;
+
+          if (!audio || !playBtn || !progress || !currentTime || !progressContainer) return;
+
+          function togglePlay() {
+    if (audio.paused) {
+        // Pausar todos los demás audios antes de reproducir uno nuevo
+        players.forEach(p => {
+            const otherAudio = p.querySelector(".audio") as HTMLAudioElement;
+            const otherPlayBtn = p.querySelector(".playBtn") as HTMLButtonElement;
+
+            if (otherAudio !== audio) {
+                otherAudio.pause();
+                // Actualizar el icono de los otros botones a "play"
+                otherPlayBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                </svg>`;
+            }
+        });
+
+        // Reproducir el audio actual y actualizar su icono a "pause"
+        audio.play();
+        playBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>`;
+    } else {
+        // Pausar el audio actual y actualizar el icono a "play"
+        audio.pause();
+        playBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+        </svg>`;
+    }
+}
+
+
+          function formatTime(seconds: number) {
+              const minutes = Math.floor(seconds / 60);
+              seconds = Math.floor(seconds % 60);
+              return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+          }
+
+          audio.addEventListener("timeupdate", () => {
+              if (!isNaN(audio.duration)) {
+                  const percent = (audio.currentTime / audio.duration) * 100;
+                  progress.style.width = `${percent}%`;
+                  currentTime.textContent = formatTime(audio.currentTime);
+              }
+          });
+
+          progressContainer.addEventListener("click", (e) => {
+              const rect = progressContainer.getBoundingClientRect();
+              const percent = (e.clientX - rect.left) / rect.width;
+              audio.currentTime = percent * audio.duration;
+          });
+
+          playBtn.addEventListener("click", togglePlay);
+      });
+  });
+</script>

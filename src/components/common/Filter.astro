@@ -1,0 +1,78 @@
+---
+let filter = Astro.url.searchParams.get("filter")
+
+if (filter === null) {
+  filter = 'all';
+}
+
+interface Props {
+  filters: string[];
+}
+
+const { filters } = Astro.props;
+---
+
+<div id="filter" class="flex flex-wrap ">
+  {
+    filters.map((f) => {
+      return (
+        <button value={f} class:list={[{ selected: filter === f }]} type="button">
+          {f}
+        </button>
+      );
+    })
+  }
+</div>
+
+<style>
+  @import "tailwindcss/theme" theme(reference);
+  @import "../../styles/global.css" reference;
+  button {
+    @apply border-2 border-transparent rounded-full font-bold px-3 md:px-5 text-center me-1 md:me-2 transition-all duration-300 capitalize text-base outline-none hover:text-primary hover:border-primary focus-visible:text-primary focus-visible:border-primary;
+  }
+
+  .selected {
+    @apply border-primary focus-visible:text-black bg-primary text-black font-bold hover:text-black hover:opacity-50 focus-visible:opacity-50;
+  }
+</style>
+<script>
+  import { $filterStore } from '~/utils/filterStore';
+  import type { filterType } from '~/utils/filterStore';
+
+  document.addEventListener('astro:page-load', () => {
+
+
+  const btns = document.querySelectorAll('#filter button') as NodeListOf<HTMLButtonElement>;
+  const defaultBtn = document.querySelector('#filter .selected') as HTMLButtonElement;
+  let prev = defaultBtn;
+  const url = new URL(window.location.href);
+  let filter = url.searchParams.get('filter') as filterType;
+  if (filter === null) {
+    filter = 'all';
+  }
+  setFilter(filter);
+
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      prev.classList.remove('selected');
+      btn.classList.add('selected');
+      prev = btn;
+      const selectedFilter = btn.value as filterType;
+      setFilter(selectedFilter);
+      const url = new URL(window.location.href);
+      if (selectedFilter !== 'all') {
+        url.searchParams.set('filter', selectedFilter);
+        window.history.pushState({}, '', url);
+      } else {
+        url.searchParams.delete('filter');
+        window.history.pushState({}, '', url);
+      }
+    });
+  });
+
+  function setFilter(filter: filterType) {
+    $filterStore.set(filter);
+  }
+})
+
+</script>

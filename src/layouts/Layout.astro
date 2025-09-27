@@ -1,0 +1,58 @@
+---
+import Head from '~/components/common/Head.astro';
+import Header from '~/components/common/Header.astro';
+import Typography from '~/components/common/Typography.astro';
+import getLookUp from '~/utils/getLookUp';
+
+getLookUp(Astro)
+
+
+interface Props {
+  title: string;
+  titleAlt?: string;
+  subtitle?: string;
+  hideTitle?: boolean;
+  hideBg?: boolean;
+  theme?: "love"
+  class?: string
+}
+
+const { title, titleAlt, subtitle, hideTitle, theme, class: className, hideBg } = Astro.props;
+
+const love = "[background:radial-gradient(125%_160%_at_55%_0%,#fff_40%,#DB7093_100%)]"
+---
+
+<!doctype html>
+<html lang="en">
+  <Head title={title} />
+  <body class="text-white bg-black relative" id="app">
+    {
+      !hideBg && <div
+      class={`fixed inset-0 -z-10 h-full w-full ${theme === "love" ? love : "[background:radial-gradient(125%_120%_at_50%_0%,#000_40%,#18276b_100%)]"}`}
+    />
+    }
+
+    <Header />
+    <div transition:animate="slide" >
+      {!hideTitle && <Typography as='h1' variant="h1">{titleAlt ? titleAlt : title}</Typography>}
+      {subtitle && <Typography as='p' variant="subtitle">{subtitle}</Typography>}
+      <div class={className ? className: 'py-10'}>
+      <slot />
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  import Lenis from 'lenis'
+  new Lenis({
+    autoRaf: true,
+  });
+</script>
+
+<style>
+  @import "tailwindcss/theme" theme(reference);
+  @import "../styles/global.css" reference;
+</style>
+
+

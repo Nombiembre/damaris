@@ -1,0 +1,10 @@
+---
+import Form from '~/components/common/Form.astro';
+import Layout from '~/layouts/Layout.astro';
+---
+
+<Layout title="Daily Log">
+  <main class="container">
+    <Form route="/api/sendNote.json" sheetName='log' />
+  </main>
+</Layout>
