@@ -30,6 +30,7 @@ const getLookUp = async (Astro: AstroGlobal) => {
   });
 
   const localip = import.meta.env.OWNIP;
+
   if (clientIp !== null && clientIp !== localip) {
     try {
       await sql`
