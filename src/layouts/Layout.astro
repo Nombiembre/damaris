@@ -4,7 +4,9 @@ import Header from '~/components/common/Header.astro';
 import Typography from '~/components/common/Typography.astro';
 import getLookUp from '~/utils/getLookUp';
 
-getLookUp(Astro)
+
+// getLookUp(Astro)
+
 
 
 interface Props {
@@ -56,3 +58,62 @@ const love = "[background:radial-gradient(125%_160%_at_55%_0%,#fff_40%,#DB7093_1
 </style>
 
 
+
+<script type="module">
+  document.addEventListener('astro:page-load', () => {
+  // Envía al endpoint usando sendBeacon o fetch
+  async function sendLog(payload) {
+    // try sendBeacon
+    if (navigator.sendBeacon) {
+      try {
+        const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+        const ok = navigator.sendBeacon('/api/sendLog.json', blob);
+        if (ok) return { success: true, method: 'beacon' };
+      } catch (e) { /* seguir a fetch */ }
+    }
+
+    // fallback: fetch con keepalive
+    try {
+      const res = await fetch('/api/sendLog.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      });
+      return await res.json().catch(() => ({ success: res.ok }));
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  // Intento inmediato al cargar la página
+  (function() {
+    const payload = { path: location.pathname }; // no envíes ip ni agent, el servidor lo obtendrá
+    sendLog(payload).catch(() => {
+      // si falla, guardamos para reintentos futuros
+      try {
+        const q = JSON.parse(localStorage.getItem('logQueue') || '[]');
+        q.push({ payload, ts: Date.now() });
+        localStorage.setItem('logQueue', JSON.stringify(q));
+      } catch (e) {}
+    });
+  })();
+
+  // Reintentos desde la cola al cargar la página
+  window.addEventListener('load', async () => {
+    try {
+      const queue = JSON.parse(localStorage.getItem('logQueue') || '[]');
+      if (!queue.length) return;
+      for (const item of queue) {
+        try {
+          await sendLog(item.payload);
+        } catch (e) {
+          // salir y conservar la cola si falla cualquiera
+          return;
+        }
+      }
+      localStorage.removeItem('logQueue');
+    } catch (e) { /* ignore */ }
+  })
+  })
+</script>
